@@ -1,0 +1,17 @@
+frontend:
+  implementation:
+    - src/
+    - public/
+
+  api_calls:
+    - src/api.js
+
+backend:
+  implementation:
+    - app.py
+
+  test_inputs:
+    - tests/test_inputs.py
+
+  tests:
+    - tests/test_app.py
