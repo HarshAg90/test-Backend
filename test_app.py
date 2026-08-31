@@ -2,6 +2,13 @@ import pytest
 
 from app import app
 
+from test_inputs import (
+    CREATE_USER_VALID_INPUT,
+    CREATE_USER_MISSING_NAME,
+    CREATE_USER_MISSING_EMAIL,
+    CREATE_USER_MISSING_PLAN,
+)
+
 
 @pytest.fixture
 def client():
@@ -24,11 +31,7 @@ def test_health(client):
 def test_create_user(client):
     response = client.post(
         "/api/create-user",
-        json={
-            "name": "Harsh",
-            "email": "harsh@example.com",
-            "plan": "pro"
-        }
+        json=CREATE_USER_VALID_INPUT
     )
 
     assert response.status_code == 201
@@ -44,10 +47,7 @@ def test_create_user(client):
 def test_create_user_requires_name(client):
     response = client.post(
         "/api/create-user",
-        json={
-            "email": "harsh@example.com",
-            "plan": "pro"
-        }
+        json=CREATE_USER_MISSING_NAME
     )
 
     assert response.status_code == 400
@@ -56,10 +56,7 @@ def test_create_user_requires_name(client):
 def test_create_user_requires_email(client):
     response = client.post(
         "/api/create-user",
-        json={
-            "name": "Harsh",
-            "plan": "pro"
-        }
+        json=CREATE_USER_MISSING_EMAIL
     )
 
     assert response.status_code == 400
@@ -68,10 +65,7 @@ def test_create_user_requires_email(client):
 def test_create_user_requires_plan(client):
     response = client.post(
         "/api/create-user",
-        json={
-            "name": "Harsh",
-            "email": "harsh@example.com"
-        }
+        json=CREATE_USER_MISSING_PLAN
     )
 
     assert response.status_code == 400
